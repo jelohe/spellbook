@@ -27,11 +27,22 @@ let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("
 const hooks = {}
 hooks.UpdateLineNumber = {
   mounted() {
-    this.el.addEventListener("input", this.updateLineNumbers)
+    this.el.addEventListener("keydown", this.handleTabulation)
     this.el.addEventListener("scroll", this.syncLineNumbers)
+    this.el.addEventListener("input", this.updateLineNumbers)
     this.handleEvent("spell-created", this.clearLines)
 
     this.updateLineNumbers()
+  },
+
+  handleTabulation(e) {
+    if (e.key !== "Tab") return;
+
+    e.preventDefault();
+    let start = this.selectionStart
+    let end = this.selectionEnd
+    this.value = this.value.substring(0, start) + "\t" + this.value.substring(end)
+    this.selectionStart = this.selectionEnd = start + 1
   },
 
   clearLines() {
