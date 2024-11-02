@@ -28,7 +28,20 @@ const hooks = {}
 hooks.UpdateLineNumber = {
   mounted() {
     this.el.addEventListener("input", this.updateLineNumbers)
+    this.el.addEventListener("scroll", this.syncLineNumbers)
+    this.handleEvent("spell-created", this.clearLines)
+
     this.updateLineNumbers()
+  },
+
+  clearLines() {
+    document.querySelector("#line-numbers").value = "1\n"
+    document.querySelector("#spell-textarea").value = ""
+  },
+
+  syncLineNumbers() {
+    const lineNumberText = document.querySelector("#line-numbers")
+    lineNumberText.scrollTop = this.scrollTop
   },
 
   updateLineNumbers() {

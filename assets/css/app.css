@@ -33,7 +33,7 @@ textarea:focus {
 }
 
 .line-numbers {
-    @apply border-white font-brand font-regular text-xs text-spDark-light bg-spDark-dark h-[300px] w-[54px] text-right overflow-hidden resize-none rounded-bl-md;
+    @apply border-white font-brand font-regular text-xs text-spDark-light bg-spDark-dark h-[300px] w-[54px] text-right overflow-hidden resize-none rounded-bl-md text-nowrap;
     border-right: none;
 }
 

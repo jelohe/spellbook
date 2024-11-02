@@ -4,6 +4,8 @@ A website to create, store and share your magic snippets.
 
 This is a small personal project to learn and practice Elixir language with the Phoenix framework.
 
+It stores the data on a Postgress SQL, you need to install and start it independently.
+
 ## Development
 
 To start your local Phoenix development server:
@@ -13,6 +15,6 @@ To start your local Phoenix development server:
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-## Deploy
+## Production
 
-Ready to run in production? [Check the official Phoenix guides](https://hexdocs.pm/phoenix/deployment.html).
+Ready to deploy? [Check the official Phoenix guides](https://hexdocs.pm/phoenix/deployment.html).

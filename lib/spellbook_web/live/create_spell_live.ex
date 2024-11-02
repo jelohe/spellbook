@@ -19,6 +19,7 @@ defmodule SpellbookWeb.CreateSpellLive do
   def handle_event("create", %{"spell" => params}, socket) do
     case Spells.create_spell(socket.assigns.current_user, params) do
       {:ok, _spell} ->
+        socket = push_event(socket, "spell-created", %{})
         changeset = Spells.change_spell(%Spell{})
         {:noreply, assign(socket, :form, to_form(changeset))}
 
