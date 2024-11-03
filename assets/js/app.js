@@ -1,19 +1,4 @@
-// If you want to use Phoenix channels, run `mix help phx.gen.channel`
-// to get started and then uncomment the line below.
-// import "./user_socket.js"
-
-// You can include dependencies in two ways.
-//
-// The simplest option is to put them in assets/vendor and
-// import them using relative paths:
-//
-//     import "../vendor/some-package.js"
-//
-// Alternatively, you can `npm install some-package --prefix assets` and import
-// them using a path starting with the package name:
-//
-//     import "some-package"
-//
+import hljs from "highlight.js"
 
 // Include phoenix_html to handle method=PUT/DELETE in forms and buttons.
 import "phoenix_html"
@@ -25,6 +10,38 @@ import topbar from "../vendor/topbar"
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 
 const hooks = {}
+hooks.Highlight = {
+  mounted() {
+    const name = this.el.getAttribute("data-name")
+    const codeBlock = this.el.querySelector("pre code")    
+    if (name && codeBlock) {
+      codeBlock.className = codeBlock.className.replace(/language-\S+/g, "")
+      codeBlock.classList.add(`language-${this.getLang(name)}`)
+      hljs.highlightElement(codeBlock)
+    }
+  },
+  
+  getLang(name) {
+    const ext = name.split(".").pop()
+    switch(ext) {
+      case "txt": 
+        return "text"
+      case "json": 
+        return "json"
+      case "html": 
+      case "heex": 
+        return "html"
+      case "js": 
+      case "jsx": 
+      case "ts": 
+      case "tsx": 
+        return "javascript"
+      default:
+        return "elixir"
+    }
+  },
+}
+
 hooks.UpdateLineNumber = {
   mounted() {
     this.el.addEventListener("keydown", this.handleTabulation)
@@ -39,8 +56,8 @@ hooks.UpdateLineNumber = {
     if (e.key !== "Tab") return;
 
     e.preventDefault();
-    let start = this.selectionStart
-    let end = this.selectionEnd
+    const start = this.selectionStart
+    const end = this.selectionEnd
     this.value = this.value.substring(0, start) + "\t" + this.value.substring(end)
     this.selectionStart = this.selectionEnd = start + 1
   },
