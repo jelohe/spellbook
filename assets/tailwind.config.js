@@ -14,12 +14,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        spSyntax: "#0E1116",
         spDark: {
           dark: "#010101",
           DEFAULT: "#3C3B3B",
           light: "#828282"
         },
-        spPurplpe: {
+        spPurple: {
           dark: "#631A61",
           DEFAULT: "#A834A5",
           light: "#E88FE5"

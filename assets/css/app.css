@@ -41,11 +41,27 @@ textarea:focus {
     @apply focus:outline-none focus:border-white focus:ring-0;
 }
 
+.syntax-area {
+    @apply bg-spSyntax border border-white h-auto text-xs;
+    border-top: none;
+    border-left: none;
+}
+
+.syntax-numbers {
+    @apply border border-white font-brand py-[28px] text-xs text-spDark-light bg-spSyntax h-auto w-[54px] text-right overflow-hidden resize-none rounded-bl-md;
+    border-top: none;
+    border-right: none;
+}
+
+.syntax-numbers:focus {
+    @apply focus:outline-none focus:border-white focus:ring-0;
+}
+
 .create_button {
-    @apply bg-spPurplpe border border-white font-brand font-regular text-black text-base;
+    @apply bg-spPurple border border-white font-brand font-regular text-black text-base;
 }
 .create_button:hover {
-    @apply hover:bg-spPurplpe-dark text-spDark-light border-spDark-light
+    @apply hover:bg-spPurple text-spDark-light border-spDark-light
 }
 
 .sp-gradient {
