@@ -13,12 +13,13 @@ const hooks = {}
 hooks.Highlight = {
   mounted() {
     const name = this.el.getAttribute("data-name")
-    const codeBlock = this.el.querySelector("pre code")    
-    if (name && codeBlock) {
-      codeBlock.className = codeBlock.className.replace(/language-\S+/g, "")
-      codeBlock.classList.add(`language-${this.getLang(name)}`)
-      hljs.highlightElement(codeBlock)
-      updateLineNumbers(codeBlock.textContent)
+    const codeblock = this.el.querySelector("pre code")    
+    if (name && codeblock) {
+      codeblock.className = codeblock.className.replace(/language-\S+/g, "")
+      codeblock.classList.add(`language-${this.getLang(name)}`)
+      const trimmed = this.trimCode(codeblock)
+      hljs.highlightElement(trimmed)
+      updateLineNumbers(trimmed.textContent)
     }
   },
   
@@ -40,6 +41,18 @@ hooks.Highlight = {
       default:
         return "elixir"
     }
+  },
+
+  trimCode(codeblock) {
+    const lines = codeblock.textContent.split("\n")
+    if (lines.length <= 2) return
+
+    lines.shift()
+    lines.pop()
+    lines.pop()
+    codeblock.textContent = lines.join("\n")
+
+    return codeblock
   },
 }
 

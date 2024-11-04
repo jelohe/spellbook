@@ -47,8 +47,17 @@ textarea:focus {
     border-left: none;
 }
 
+.syntax-area > pre > code {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.syntax-area > pre {
+    margin-bottom: -16px;
+}
+
 .syntax-numbers {
-    @apply border border-white font-brand py-[28px] text-xs text-spDark-light bg-spSyntax h-auto w-[54px] text-right overflow-hidden resize-none rounded-bl-md;
+    @apply border border-white font-brand py-[16px] text-xs text-spDark-light bg-spSyntax h-auto w-[54px] text-right overflow-hidden resize-none rounded-bl-md;
     border-top: none;
     border-right: none;
 }
