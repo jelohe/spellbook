@@ -18,6 +18,7 @@ hooks.Highlight = {
       codeBlock.className = codeBlock.className.replace(/language-\S+/g, "")
       codeBlock.classList.add(`language-${this.getLang(name)}`)
       hljs.highlightElement(codeBlock)
+      updateLineNumbers(codeBlock.textContent)
     }
   },
   
@@ -46,10 +47,10 @@ hooks.UpdateLineNumber = {
   mounted() {
     this.el.addEventListener("keydown", this.handleTabulation)
     this.el.addEventListener("scroll", this.syncLineNumbers)
-    this.el.addEventListener("input", this.updateLineNumbers)
+    this.el.addEventListener("input", () => updateLineNumbers(this.el.value))
     this.handleEvent("spell-created", this.clearLines)
 
-    this.updateLineNumbers()
+    updateLineNumbers(this.el.value)
   },
 
   handleTabulation(e) {
@@ -72,17 +73,17 @@ hooks.UpdateLineNumber = {
     lineNumberText.scrollTop = this.scrollTop
   },
 
-  updateLineNumbers() {
-    const lineNumberText = document.querySelector("#line-numbers")
-    if (!lineNumberText) return
+}
 
-    const lines = this.value ? this.value.split("\n") : [""]
-    const numbers = lines
-      .map((_, i) => i + 1)
-      .join("\n") + "\n"
+function updateLineNumbers(value) {
+  const lineNumberText = document.querySelector("#line-numbers")
+  if (!lineNumberText) return
 
-    lineNumberText.value = numbers
-  },
+  const numbers = value.split("\n")
+    .map((_, i) => i + 1)
+    .join("\n") + "\n"
+
+  lineNumberText.value = numbers
 }
 
 let liveSocket = new LiveSocket("/live", Socket, {
