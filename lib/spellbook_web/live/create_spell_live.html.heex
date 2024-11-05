@@ -3,47 +3,8 @@
     Store and share your magic.
   </h1>
 </div>
-<.form for={@form} phx-submit="create" phx-change="validate">
-  <div class="justify center px-28 w-full space-y-4 mb-10">
-    <.input
-      field={@form[:description]}
-      placeholder="Spell description..."
-      autocomplete="off"
-      phx-debounce="blur"
-    />
-    <div>
-      <div class="flex p-2 items-center bg-spDark rounded-t-md border border-b-0">
-        <div class="w-[300px] mb-2">
-          <.input
-            field={@form[:name]}
-            placeholder="Filename including extension..."
-            autocomplete="off"
-            phx-debounce="blur"
-          />
-        </div> 
-       </div>
-       <div id="spell-wrapper" class="flex w-full" phx-update="ignore">
-         <textarea
-           id="line-numbers"
-           class="line-numbers"
-           readonly
-         ><%= "1\n" %></textarea>
-         <div class="w-full">
-           <.input
-             id="spell-textarea"
-             phx-hook="UpdateLineNumber"
-             field={@form[:markup_text]}
-             type="textarea"
-             placeholder="Write your spell"
-             spellcheck="false"
-             autocomplete="off"
-             phx-debounce="blur"
-           />
-         </div>
-      </div>
-    </div>
-    <div class="flex justify-end">
-      <.button class="create_button" phx-disable-with="Creating...">Create Spell</.button>
-    </div>
-  </div>
-</.form>
+<.live_component
+  module={SpellFormComponent}
+  id={:new}
+  current_user={@current_user}
+/>
