@@ -7,6 +7,7 @@ defmodule Spellbook.Spells do
   alias Spellbook.Repo
 
   alias Spellbook.Spells.Spell
+  alias Spellbook.Accounts.User
 
   @doc """
   Returns the list of spells.
@@ -79,15 +80,23 @@ defmodule Spellbook.Spells do
 
   ## Examples
 
-      iex> delete_spell(spell)
+      iex> delete_spell(user, spell_id)
       {:ok, %Spell{}}
 
-      iex> delete_spell(spell)
+      iex> delete_spell(user, spell_id)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_spell(%Spell{} = spell) do
-    Repo.delete(spell)
+
+  def delete_spell(%User{} = user, spell_id) do
+    spell = Repo.get!(Spell, spell_id)
+
+    if user.id == spell.user_id do
+      Repo.delete(spell)
+      {:ok, spell}
+    else
+      {:error, :unauthorized}
+    end
   end
 
   @doc """

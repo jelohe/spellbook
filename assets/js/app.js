@@ -49,7 +49,6 @@ hooks.Highlight = {
 
     lines.shift()
     lines.pop()
-    lines.pop()
     codeblock.textContent = lines.join("\n")
 
     return codeblock
@@ -86,6 +85,21 @@ hooks.UpdateLineNumber = {
     lineNumberText.scrollTop = this.scrollTop
   },
 
+}
+
+hooks.CopyToClipboard = {
+  mounted() {
+    this.el.addEventListener("click", e => {
+      const text = this.el.getAttribute("data-clipboard-spell")
+      if (!text) return
+
+      navigator
+        .clipboard
+        .writeText(text)
+        .then(() => console.log("copied"))
+        .catch(err => console.log(`Error ${err}`))
+    })
+  }
 }
 
 function updateLineNumbers(value) {

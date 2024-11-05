@@ -11,7 +11,7 @@
           <%= @current_user.email %><span class="text-white">/</span><%= @spell.name %>
         </div>
         <div class="text-lg text-white font-bold">
-          <%= @spell.updated_at %>
+          <%= @spell.relative %>
         </div>
         <p class="text-left text-sm text-white font-brand">
           <%= @spell.description %>
@@ -39,14 +39,27 @@
 
     <div>
       <%= if @current_user.id == @spell.user_id do %>
-        <button class="px-1" type="button" phx-click={}>
+        <button
+          class="px-1
+          interactive-img-btn"
+          type="button"
+          phx-click="delete"
+          phx-value-id={@spell.id}
+        >
           <img src="/images/delete.svg" alt="Delete button" />
         </button>
-        <button class="px-1" type="button" phx-click={}>
+        <button class="px-1 interactive-img-btn" type="button" phx-click={}>
           <img src="/images/edit.svg" alt="Edit button" />
         </button>
       <% end %>
-      <button class="px-1" type="button" phx-click={}>
+      <button
+        id="copy-button"
+        class="px-1 interactive-img-btn"
+        type="button"
+        phx-click={}
+        phx-hook="CopyToClipboard"
+        data-clipboard-spell={@spell.markup_text}
+      >
         <img src="/images/copy.svg" alt="Copy button" />
       </button>
     </div>
