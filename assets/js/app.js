@@ -19,7 +19,7 @@ hooks.Highlight = {
       codeblock.classList.add(`language-${this.getLang(name)}`)
       const trimmed = this.trimCode(codeblock)
       hljs.highlightElement(trimmed)
-      updateLineNumbers(trimmed.textContent)
+      updateLineNumbers(trimmed.textContent, "#line-numbers")
     }
   },
   
@@ -102,8 +102,23 @@ hooks.CopyToClipboard = {
   }
 }
 
-function updateLineNumbers(value) {
-  const lineNumberText = document.querySelector("#line-numbers")
+hooks.ToggleEdit = {
+  mounted() {
+    this.el.addEventListener("click", e => {
+      console.log("Clicked!")
+      const edit = document.getElementById("edit-section")
+      const preview = document.getElementById("preview-section")
+      if (edit && preview) {
+        edit.style.display = "block"
+        preview.style.display = "none"
+        console.log("Swapped!")
+      }
+    });
+  }
+}
+
+function updateLineNumbers(value, id="#create-line-numbers") {
+  const lineNumberText = document.querySelector(id)
   if (!lineNumberText) return
 
   const numbers = value.split("\n")

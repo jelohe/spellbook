@@ -1,6 +1,7 @@
 defmodule SpellbookWeb.SpellLive do
   use SpellbookWeb, :live_view
   alias Spellbook.Spells
+  alias SpellbookWeb.SpellFormComponent
 
   def mount(%{"id" => id}, _session, socket) do
     spell = Spells.get_spell!(id)

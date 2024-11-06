@@ -69,10 +69,15 @@ defmodule Spellbook.Spells do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_spell(%Spell{} = spell, attrs) do
-    spell
-    |> Spell.changeset(attrs)
-    |> Repo.update()
+  def update_spell(%User{} = user, attrs) do
+    spell = Repo.get!(Spell, attrs["id"])
+    if user.id == spell.user_id do
+      spell
+      |> Spell.changeset(attrs)
+      |> Repo.update()
+    else
+      {:error, :unauthorized}
+    end
   end
 
   @doc """

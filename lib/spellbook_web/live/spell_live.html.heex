@@ -31,7 +31,16 @@
   </div>
 </div>
 
-<div class="justify-center px-28 w-full mb-10">
+<div id="edit-section" style="display: none">
+  <.live_component
+    module={SpellFormComponent}
+    id={@spell.id}
+    current_user={@current_user}
+    form={to_form(Spells.change_spell(@spell))}
+  />
+</div>
+
+<div id="preview-section" class="justify-center px-28 w-full mb-10">
   <div class="flex p-2 items-center justify-between bg-spDark rounded-t-md border">
     <div class="w-[300px] pl-2 font-brand font-bold text-base text-spLavender-dark">
       <%= @spell.name %>
@@ -48,7 +57,12 @@
         >
           <img src="/images/delete.svg" alt="Delete button" />
         </button>
-        <button class="px-1 interactive-img-btn" type="button" phx-click={}>
+        <button
+          id="edit-button"
+          class="px-1 interactive-img-btn"
+          type="button"
+          phx-hook="ToggleEdit"
+        >
           <img src="/images/edit.svg" alt="Edit button" />
         </button>
       <% end %>

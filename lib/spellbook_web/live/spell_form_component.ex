@@ -17,6 +17,14 @@ defmodule SpellbookWeb.SpellFormComponent do
   end
 
   def handle_event("create", %{"spell" => params}, socket) do
+    if is_nil(params["id"]) do
+      create_spell(params, socket)
+    else
+      update_spell(params, socket)
+    end
+  end
+
+  defp create_spell(params, socket) do
     case Spells.create_spell(socket.assigns.current_user, params) do
       {:ok, spell} ->
         socket = push_event(socket, "spell-created", %{})
@@ -26,6 +34,17 @@ defmodule SpellbookWeb.SpellFormComponent do
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, :form, to_form(changeset))}
+    end
+  end
+
+  defp update_spell(params, socket) do
+    case Spells.update_spell(socket.assigns.current_user, params) do
+      {:ok, spell} ->
+        {:noreply, push_patch(socket, to: ~p"/spell?#{[id: spell]}")}
+
+      {:error, message} ->
+        socket = put_flash(socket, :error, message)
+        {:noreply, socket}
     end
   end
 
@@ -51,9 +70,9 @@ defmodule SpellbookWeb.SpellFormComponent do
                 />
               </div> 
              </div>
-             <div id="spell-wrapper" class="flex w-full" phx-update="ignore">
+             <div id="create-spell-wrapper" class="flex w-full" phx-update="ignore">
                <textarea
-                 id="line-numbers"
+                 id="create-line-numbers"
                  class="line-numbers"
                  readonly
                ><%= "1\n" %></textarea>
@@ -72,7 +91,11 @@ defmodule SpellbookWeb.SpellFormComponent do
             </div>
           </div>
           <div class="flex justify-end">
-            <.button class="create_button" phx-disable-with="Creating...">Create Spell</.button>
+            <%= if @id == :new do %>
+              <.button class="create_button" phx-disable-with="Creating...">Create Spell</.button>
+            <% else %>
+              <.button class="create_button" phx-disable-with="Editing...">Edit Spell</.button>
+            <% end %>
           </div>
         </div>
       </.form>
