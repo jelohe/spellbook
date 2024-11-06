@@ -17,7 +17,7 @@ defmodule SpellbookWeb.SpellFormComponent do
   end
 
   def handle_event("create", %{"spell" => params}, socket) do
-    if is_nil(params["id"]) do
+    if params["id"] == "new" do
       create_spell(params, socket)
     else
       update_spell(params, socket)
@@ -40,7 +40,7 @@ defmodule SpellbookWeb.SpellFormComponent do
   defp update_spell(params, socket) do
     case Spells.update_spell(socket.assigns.current_user, params) do
       {:ok, spell} ->
-        {:noreply, push_patch(socket, to: ~p"/spell?#{[id: spell]}")}
+        {:noreply, push_navigate(socket, to: ~p"/spell?#{[id: spell]}")}
 
       {:error, message} ->
         socket = put_flash(socket, :error, message)
@@ -53,6 +53,11 @@ defmodule SpellbookWeb.SpellFormComponent do
     <div>
       <.form for={@form} phx-submit="create" phx-change="validate" phx-target={@myself}>
         <div class="justify center px-28 w-full space-y-4 mb-10">
+          <.input
+            style="display: none"
+            field={@form[:id]}
+            value={@id}
+          />
           <.input
             field={@form[:description]}
             placeholder="Spell description..."
