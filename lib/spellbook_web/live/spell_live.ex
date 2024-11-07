@@ -13,10 +13,11 @@ defmodule SpellbookWeb.SpellLive do
 
   def handle_event("delete", %{"id" => id}, socket) do
     case Spells.delete_spell(socket.assigns.current_user, id) do
-      {:ok, _spell} -> 
+      {:ok, _spell} ->
         socket = put_flash(socket, :info, "Spell deleted")
         {:noreply, push_navigate(socket, to: ~p"/create")}
-      {:error, message} -> 
+
+      {:error, message} ->
         socket = put_flash(socket, :error, message)
         {:noreply, socket}
     end

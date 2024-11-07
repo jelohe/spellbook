@@ -19,7 +19,7 @@ hooks.Highlight = {
       codeblock.classList.add(`language-${this.getLang(name)}`)
       const trimmed = this.trimCode(codeblock)
       hljs.highlightElement(trimmed)
-      updateLineNumbers(trimmed.textContent, "#line-numbers")
+      updateLineNumbers(trimmed.textContent, "line-numbers")
     }
   },
   
@@ -58,8 +58,9 @@ hooks.Highlight = {
 hooks.UpdateLineNumber = {
   mounted() {
     this.el.addEventListener("keydown", this.handleTabulation)
-    this.el.addEventListener("scroll", this.syncLineNumbers)
-    this.el.addEventListener("input", () => updateLineNumbers(this.el.value))
+    this.el.addEventListener("scroll",() => syncLineNumbers(this.el))
+    this.el.addEventListener("input", () =>
+      updateLineNumbers(this.el.value))
     this.handleEvent("spell-created", this.clearLines)
 
     updateLineNumbers(this.el.value)
@@ -76,15 +77,9 @@ hooks.UpdateLineNumber = {
   },
 
   clearLines() {
-    document.querySelector("#line-numbers").value = "1\n"
+    document.querySelector("#create-line-numbers").value = "1\n"
     document.querySelector("#spell-textarea").value = ""
   },
-
-  syncLineNumbers() {
-    const lineNumberText = document.querySelector("#line-numbers")
-    lineNumberText.scrollTop = this.scrollTop
-  },
-
 }
 
 hooks.CopyToClipboard = {
@@ -111,14 +106,13 @@ hooks.ToggleEdit = {
       if (edit && preview) {
         edit.style.display = "block"
         preview.style.display = "none"
-        console.log("Swapped!")
       }
     });
   }
 }
 
-function updateLineNumbers(value, id="#create-line-numbers") {
-  const lineNumberText = document.querySelector(id)
+function updateLineNumbers(value, id = "create-line-numbers") {
+  const lineNumberText = document.getElementById(id)
   if (!lineNumberText) return
 
   const numbers = value.split("\n")
@@ -126,6 +120,14 @@ function updateLineNumbers(value, id="#create-line-numbers") {
     .join("\n") + "\n"
 
   lineNumberText.value = numbers
+}
+
+function syncLineNumbers(el, id = "create-line-numbers") {
+  const lineNumberText = document.getElementById(id)
+  console.log(lineNumberText);
+  if (!lineNumberText) return;
+
+  lineNumberText.scrollTop = el.scrollTop
 }
 
 let liveSocket = new LiveSocket("/live", Socket, {
