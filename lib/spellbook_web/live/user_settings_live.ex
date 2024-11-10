@@ -34,7 +34,7 @@ defmodule SpellbookWeb.UserSettingsLive do
               required
             />
             <:actions>
-              <.button phx-disable-with="Changing...">Change Email</.button>
+              <.button class="create_button" phx-disable-with="Changing...">Change Email</.button>
             </:actions>
           </.simple_form>
         </div>
@@ -70,7 +70,7 @@ defmodule SpellbookWeb.UserSettingsLive do
               required
             />
             <:actions>
-              <.button phx-disable-with="Changing...">Change Password</.button>
+              <.button class="create_button" phx-disable-with="Changing...">Change Password</.button>
             </:actions>
           </.simple_form>
         </div>
