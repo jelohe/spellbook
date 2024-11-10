@@ -6,18 +6,20 @@ defmodule SpellbookWeb.UserRegistrationLive do
 
   def render(assigns) do
     ~H"""
-    <div class="mx-auto max-w-sm">
-      <.header class="text-center">
+    <div class="sp-gradient flex items-center justify-center flex-col">
+      <h1 class="font-brand font-bold text-3xl text-white">
         Register for an account
-        <:subtitle>
-          Already registered?
-          <.link navigate={~p"/users/log_in"} class="font-semibold text-brand hover:underline">
-            Log in
-          </.link>
-          to your account now.
-        </:subtitle>
-      </.header>
+      </h1>
+      <h2 class="text-white">
+        Already registered?
+        <.link navigate={~p"/users/log_in"} class="font-semibold text-brand hover:underline">
+          Log in
+        </.link>
+        to your account now.
+      </h2>
+    </div>
 
+    <div class="w-1/2 mx-auto -mt-[48px]">
       <.simple_form
         for={@form}
         id="registration_form"
