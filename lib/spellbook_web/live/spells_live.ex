@@ -15,20 +15,27 @@ defmodule SpellbookWeb.SpellsLive do
 
   def spell_component(assigns) do
     ~H"""
-    <div>
-      <%= @current_user.email %>/<%= @spell.name %>
-    </div>  
-
-    <div>
-      <%= @spell.updated_at %>
-    </div>  
-
-    <div>
-      <%= @spell.description %>
-    </div>  
-
-    <div>
-      <%= @spell.markup_text %>
+    <div class="flex justify-between">
+      <img
+        src="/images/user-image.svg"
+        alt="Profile image"
+        class="round-image-padding w-8 h-8"
+      />
+      <div class="flex flex-col">
+        <div class="font-bold text-base text-spLavender-dark">
+          <%= @spell.user_id %><span class="text-white">/</span><%= @spell.name %>
+        </div>
+        <div class="font-bold text-white text-lg">
+          <%= @spell.updated_at %>
+        </div>
+        <p class="text-sm text-white">
+          <%= @spell.description %>
+        </p>
+      </div>  
+      <div class="flex flex-col">  
+        <img src="/images/comment.svg" alt="Comment count"/>
+        <span class="h-6 px-1">0</span>
+      </div>  
     </div>  
     """
   end
