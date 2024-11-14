@@ -128,8 +128,8 @@ defmodule Spellbook.Spells do
       [%SavedSpell{}, ...]
 
   """
-  def list_saved_spells do
-    Repo.all(SavedSpell)
+  def list_saved_spells(%User{} = _user) do
+    [%SavedSpell{id: "wadus"}]
   end
 
   @doc """

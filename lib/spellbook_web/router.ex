@@ -68,6 +68,7 @@ defmodule SpellbookWeb.Router do
       on_mount: [{SpellbookWeb.UserAuth, :ensure_authenticated}] do
       live "/create", CreateSpellLive
       live "/spell", SpellLive
+      live "/spells", SpellsLive
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
     end
