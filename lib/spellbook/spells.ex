@@ -19,7 +19,9 @@ defmodule Spellbook.Spells do
 
   """
   def list_spells do
-    Repo.all(Spell)
+    Spell
+    |> order_by(desc: :updated_at)
+    |> Repo.all()
   end
 
   @doc """
